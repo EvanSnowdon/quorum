@@ -1,0 +1,89 @@
+country: GB
+country_name: United Kingdom
+language: en
+notes: >
+  The Office for National Statistics exposes a keyless JSON API (the ONS API,
+  api.ons.gov.uk) and the Beta time-series endpoint. Bank of England statistics
+  are available via the Interactive Database. World Bank and IMF series for the
+  UK are keyless and wired into the spine. IMF DataMapper uses the country code
+  GBR.
+
+sources:
+  - id: ons
+    name: Office for National Statistics (ONS)
+    type: statistics
+    url: https://www.ons.gov.uk
+    api:
+      base_url: https://api.ons.gov.uk/v1
+      format: json
+      auth: none
+    coverage:
+      - gdp
+      - national_accounts
+      - prices
+      - employment
+      - demographics
+      - trade
+    reliability: primary
+    update_frequency: monthly
+
+  - id: boe
+    name: Bank of England
+    type: central_bank
+    url: https://www.bankofengland.co.uk
+    api:
+      base_url: https://www.bankofengland.co.uk/boeapps/database
+      format: csv
+      auth: none
+    coverage:
+      - interest_rates
+      - money_supply
+      - exchange_rates
+      - financial_conditions
+    reliability: primary
+    update_frequency: monthly
+
+  - id: fca
+    name: Financial Conduct Authority (FCA)
+    type: regulator
+    url: https://www.fca.org.uk
+    coverage:
+      - financial_supervision
+      - markets
+    reliability: primary
+    update_frequency: quarterly
+
+  - id: worldbank
+    name: World Bank Open Data
+    type: intergovernmental
+    url: https://data.worldbank.org/country/united-kingdom
+    api:
+      base_url: https://api.worldbank.org/v2
+      format: json
+      auth: none
+      spine_tool: data_spine.worldbank
+    coverage:
+      - gdp
+      - population
+      - inflation
+      - trade
+      - development_indicators
+    reliability: primary
+    update_frequency: annual
+
+  - id: imf
+    name: IMF World Economic Outlook (DataMapper)
+    type: intergovernmental
+    url: https://www.imf.org/en/Publications/WEO
+    api:
+      base_url: https://www.imf.org/external/datamapper/api/v1
+      format: json
+      auth: none
+      spine_tool: data_spine.imf
+    coverage:
+      - gdp_growth
+      - inflation
+      - government_debt
+      - current_account
+    reliability: primary
+    update_frequency: quarterly

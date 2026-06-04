@@ -1,0 +1,148 @@
+# Source-pack schema — annotated template for contributors.
+#
+# A source pack teaches the data spine where one country's official statistics
+# live. One YAML file per country under this directory, named by ISO 3166-1
+# alpha-2 code (us.yaml, cn.yaml, de.yaml, ...). Every pack is validated against
+# the Pydantic models in schema.py on load, so a file that does not match this
+# shape fails fast with a clear error rather than producing a half-populated
+# context block at dispatch time.
+#
+# This file is the human-readable companion to schema.py and to CONTRIBUTING.md
+# ("Contribution path 2"). Copy it, fill it in, delete the commentary, and drop
+# the result in as <alpha-2>.yaml. It is itself valid YAML so it can be linted,
+# but it is a template: the leading underscore in the filename keeps load_pack
+# from ever treating it as a real region pack.
+#
+# Field reference
+# ---------------
+# country         (required) ISO 3166-1 alpha-2 code, uppercase. Matches the
+#                 filename. The loader also accepts a few common alpha-3 codes
+#                 as a convenience, but the file is named and keyed by alpha-2.
+# country_name    (required) Human-readable country (or bloc) name.
+# language        (required) Primary publication language, ISO 639-1. Signals to
+#                 a worker which language official sources publish in, so it can
+#                 prefer local-language primary sources over translations.
+# notes           (optional) Free text: quirks a reviewer or user should know —
+#                 auth requirements, code conventions (e.g. the IMF alpha-3),
+#                 SDMX-only endpoints, anything non-obvious about the sources.
+# sources         (required) A non-empty list of official sources. A complete
+#                 pack carries at least the three pillars the quality score
+#                 rewards: a statistics office, a central bank, and one
+#                 regulator. Order is preserved in the rendered context block.
+#
+# Each entry in `sources`:
+#   id              (required) Unique within the file; lowercase snake_case.
+#   name            (required) Official name of the body, as it should be cited.
+#   type            (required) One of:
+#                     statistics | central_bank | regulator | intergovernmental
+#   url             (required) The source's canonical landing page (https).
+#   api             (optional) Present only when the source exposes a machine
+#                   endpoint. Omit the whole block for human-only sources; they
+#                   are still recorded so a worker knows the data exists.
+#     base_url        (required within api) The API root.
+#     format          (required within api) One of: json | xml | csv | sdmx
+#     auth            (optional, default none) One of:
+#                       none | token | registration
+#     spine_tool      (optional) The data_spine tool that can query this source
+#                     directly, e.g. data_spine.worldbank. Set ONLY when a spine
+#                     tool actually exists for the endpoint — it is what
+#                     SourcePack.tool_names() exposes to a task contract. Sources
+#                     without a wired tool simply omit it.
+#   coverage        (optional) Topics the spine should route to this source.
+#                   The vocabulary is open, but reuse terms from the other packs
+#                   (grep before inventing): gdp, national_accounts, prices,
+#                   employment, trade, demographics, interest_rates, money_supply,
+#                   industry_output, securities_markets, ...
+#   reliability     (optional, default primary) One of: primary | secondary.
+#   update_frequency(optional) One of:
+#                     annual | quarterly | monthly | weekly | daily
+#
+# Anything not listed above is rejected by the validator (extra keys are
+# forbidden) so typos surface immediately instead of being silently ignored.
+
+country: XX
+country_name: Example Country
+language: en
+notes: >
+  Optional. Note auth requirements, country-code conventions, SDMX-only
+  endpoints, or any other quirk a contributor or user should know. Delete this
+  block if there is nothing worth flagging.
+
+sources:
+  # The national statistics office. Most packs make this the first source.
+  - id: example_statistics_office
+    name: Example National Statistics Office
+    type: statistics
+    url: https://stats.example.gov
+    api:
+      base_url: https://api.stats.example.gov/v1
+      format: json
+      auth: registration
+    coverage:
+      - gdp
+      - national_accounts
+      - prices
+      - employment
+      - demographics
+    reliability: primary
+    update_frequency: monthly
+
+  # The central bank. A human-only source omits the `api` block entirely.
+  - id: example_central_bank
+    name: Central Bank of Example
+    type: central_bank
+    url: https://centralbank.example.gov
+    coverage:
+      - interest_rates
+      - money_supply
+      - exchange_rates
+    reliability: primary
+    update_frequency: monthly
+
+  # At least one sector regulator rounds out the three pillars.
+  - id: example_markets_regulator
+    name: Example Securities and Markets Authority
+    type: regulator
+    url: https://markets.example.gov
+    coverage:
+      - securities_markets
+      - market_supervision
+    reliability: primary
+    update_frequency: quarterly
+
+  # Intergovernmental series wired into the spine give every pack a keyless,
+  # directly-queryable baseline. Set spine_tool because a tool exists for these.
+  - id: worldbank
+    name: World Bank Open Data
+    type: intergovernmental
+    url: https://data.worldbank.org
+    api:
+      base_url: https://api.worldbank.org/v2
+      format: json
+      auth: none
+      spine_tool: data_spine.worldbank
+    coverage:
+      - gdp
+      - population
+      - inflation
+      - trade
+      - development_indicators
+    reliability: primary
+    update_frequency: annual
+
+  - id: imf
+    name: IMF World Economic Outlook (DataMapper)
+    type: intergovernmental
+    url: https://www.imf.org/en/Publications/WEO
+    api:
+      base_url: https://www.imf.org/external/datamapper/api/v1
+      format: json
+      auth: none
+      spine_tool: data_spine.imf
+    coverage:
+      - gdp_growth
+      - inflation
+      - government_debt
+      - current_account
+    reliability: primary
+    update_frequency: quarterly

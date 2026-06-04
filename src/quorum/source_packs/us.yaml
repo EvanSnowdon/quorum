@@ -1,0 +1,123 @@
+country: US
+country_name: United States
+language: en
+notes: >
+  BEA and BLS expose public REST APIs that require a free registration key.
+  FRED (Federal Reserve Bank of St. Louis) aggregates most federal series and
+  also uses a free key. World Bank and IMF series for the US need no key and are
+  wired into the spine directly.
+
+sources:
+  - id: bea
+    name: Bureau of Economic Analysis (BEA)
+    type: statistics
+    url: https://www.bea.gov
+    api:
+      base_url: https://apps.bea.gov/api/data
+      format: json
+      auth: registration
+    coverage:
+      - gdp
+      - national_accounts
+      - trade
+      - industry_output
+    reliability: primary
+    update_frequency: quarterly
+
+  - id: bls
+    name: Bureau of Labor Statistics (BLS)
+    type: statistics
+    url: https://www.bls.gov
+    api:
+      base_url: https://api.bls.gov/publicAPI/v2
+      format: json
+      auth: registration
+    coverage:
+      - employment
+      - unemployment
+      - prices
+      - wages
+      - productivity
+    reliability: primary
+    update_frequency: monthly
+
+  - id: census
+    name: U.S. Census Bureau
+    type: statistics
+    url: https://www.census.gov
+    api:
+      base_url: https://api.census.gov/data
+      format: json
+      auth: token
+    coverage:
+      - demographics
+      - business_statistics
+      - trade
+      - manufacturing
+    reliability: primary
+    update_frequency: annual
+
+  - id: federal_reserve
+    name: Federal Reserve (FRED, Federal Reserve Bank of St. Louis)
+    type: central_bank
+    url: https://www.federalreserve.gov
+    api:
+      base_url: https://api.stlouisfed.org/fred
+      format: json
+      auth: registration
+    coverage:
+      - interest_rates
+      - money_supply
+      - financial_conditions
+      - macro_aggregates
+    reliability: primary
+    update_frequency: monthly
+
+  - id: sec
+    name: U.S. Securities and Exchange Commission (EDGAR)
+    type: regulator
+    url: https://www.sec.gov
+    api:
+      base_url: https://data.sec.gov
+      format: json
+      auth: none
+    coverage:
+      - company_filings
+      - financial_statements
+    reliability: primary
+    update_frequency: daily
+
+  - id: worldbank
+    name: World Bank Open Data
+    type: intergovernmental
+    url: https://data.worldbank.org/country/united-states
+    api:
+      base_url: https://api.worldbank.org/v2
+      format: json
+      auth: none
+      spine_tool: data_spine.worldbank
+    coverage:
+      - gdp
+      - population
+      - inflation
+      - trade
+      - development_indicators
+    reliability: primary
+    update_frequency: annual
+
+  - id: imf
+    name: IMF World Economic Outlook (DataMapper)
+    type: intergovernmental
+    url: https://www.imf.org/en/Publications/WEO
+    api:
+      base_url: https://www.imf.org/external/datamapper/api/v1
+      format: json
+      auth: none
+      spine_tool: data_spine.imf
+    coverage:
+      - gdp_growth
+      - inflation
+      - government_debt
+      - current_account
+    reliability: primary
+    update_frequency: quarterly

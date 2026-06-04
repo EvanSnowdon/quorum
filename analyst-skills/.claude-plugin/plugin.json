@@ -1,0 +1,36 @@
+{
+  "name": "quorum-analyst-skills",
+  "version": "0.1.0",
+  "description": "Fifteen named-methodology analyst skills (Porter's Five Forces, Value Chain, Jobs-to-be-Done & Disruption, 7 Powers, Good Strategy/Bad Strategy, Playing to Win, Blue Ocean, Crossing the Chasm, PESTEL, TAM/SAM/SOM, Ansoff, Three Horizons, Minto Pyramid, DCF/comparables valuation, and MECE engagement scoping) for consulting-grade market and strategy analysis. Each skill is a standalone SKILL.md with an on-demand reference; together they staff the Quorum engagement engine.",
+  "author": {
+    "name": "The Quorum Authors"
+  },
+  "homepage": "https://github.com/EvanSnowdon/quorum",
+  "repository": "https://github.com/EvanSnowdon/quorum",
+  "license": "MIT",
+  "keywords": [
+    "skills",
+    "strategy",
+    "consulting",
+    "market-analysis",
+    "competitive-analysis",
+    "agent-skills"
+  ],
+  "skills": [
+    "./five-forces-analyst",
+    "./value-chain-analyst",
+    "./jtbd-disruption-analyst",
+    "./seven-powers-analyst",
+    "./good-strategy-critic",
+    "./playing-to-win-analyst",
+    "./blue-ocean-analyst",
+    "./crossing-the-chasm-analyst",
+    "./pestel-analyst",
+    "./tam-sam-som-analyst",
+    "./ansoff-analyst",
+    "./three-horizons-analyst",
+    "./pyramid-editor",
+    "./valuation-analyst",
+    "./mece-engagement-manager"
+  ]
+}

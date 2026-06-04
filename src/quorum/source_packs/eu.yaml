@@ -1,0 +1,91 @@
+country: EU
+country_name: European Union
+language: en
+notes: >
+  The EU is an economic bloc, not a single country; this pack routes to the
+  Union-level statistical and monetary institutions. Eurostat and the ECB both
+  publish SDMX and JSON APIs without a key. SDMX support across the spine is
+  roadmap work, so these are recorded as machine sources without a wired spine
+  tool for now. For single member states, use the country's own pack where it
+  exists. World Bank reports the EU aggregate under the code EUU.
+
+sources:
+  - id: eurostat
+    name: Eurostat
+    type: statistics
+    url: https://ec.europa.eu/eurostat
+    api:
+      base_url: https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0
+      format: json
+      auth: none
+    coverage:
+      - gdp
+      - national_accounts
+      - employment
+      - prices
+      - trade
+      - industry_production
+      - demographics
+    reliability: primary
+    update_frequency: monthly
+
+  - id: ecb
+    name: European Central Bank (ECB Data Portal)
+    type: central_bank
+    url: https://www.ecb.europa.eu
+    api:
+      base_url: https://data-api.ecb.europa.eu/service
+      format: sdmx
+      auth: none
+    coverage:
+      - interest_rates
+      - money_supply
+      - exchange_rates
+      - financial_conditions
+    reliability: primary
+    update_frequency: monthly
+
+  - id: esma
+    name: European Securities and Markets Authority (ESMA)
+    type: regulator
+    url: https://www.esma.europa.eu
+    coverage:
+      - securities_markets
+      - market_supervision
+    reliability: primary
+    update_frequency: quarterly
+
+  - id: worldbank
+    name: World Bank Open Data (European Union aggregate)
+    type: intergovernmental
+    url: https://data.worldbank.org/country/european-union
+    api:
+      base_url: https://api.worldbank.org/v2
+      format: json
+      auth: none
+      spine_tool: data_spine.worldbank
+    coverage:
+      - gdp
+      - population
+      - inflation
+      - trade
+      - development_indicators
+    reliability: primary
+    update_frequency: annual
+
+  - id: imf
+    name: IMF World Economic Outlook (DataMapper, Euro area)
+    type: intergovernmental
+    url: https://www.imf.org/en/Publications/WEO
+    api:
+      base_url: https://www.imf.org/external/datamapper/api/v1
+      format: json
+      auth: none
+      spine_tool: data_spine.imf
+    coverage:
+      - gdp_growth
+      - inflation
+      - government_debt
+      - current_account
+    reliability: primary
+    update_frequency: quarterly

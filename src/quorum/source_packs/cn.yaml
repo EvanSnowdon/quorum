@@ -1,0 +1,96 @@
+country: CN
+country_name: China
+language: zh
+notes: >
+  The National Bureau of Statistics publishes the NBS National Data portal
+  (data.stats.gov.cn), which exposes a query interface primarily documented in
+  Chinese and without a stable public REST contract; treat it as a primary human
+  source. World Bank and IMF series for China are keyless and wired into the
+  spine. IMF DataMapper uses the country code CHN.
+
+sources:
+  - id: nbs
+    name: National Bureau of Statistics of China (NBS)
+    type: statistics
+    url: https://www.stats.gov.cn
+    api:
+      base_url: https://data.stats.gov.cn/english
+      format: json
+      auth: none
+    coverage:
+      - gdp
+      - national_accounts
+      - industry_output
+      - prices
+      - population
+      - retail_sales
+    reliability: primary
+    update_frequency: monthly
+
+  - id: pboc
+    name: People's Bank of China (PBOC)
+    type: central_bank
+    url: http://www.pbc.gov.cn
+    coverage:
+      - interest_rates
+      - money_supply
+      - credit
+      - exchange_rates
+    reliability: primary
+    update_frequency: monthly
+
+  - id: customs
+    name: General Administration of Customs of China (GACC)
+    type: statistics
+    url: http://www.customs.gov.cn
+    coverage:
+      - trade
+      - imports
+      - exports
+    reliability: primary
+    update_frequency: monthly
+
+  - id: csrc
+    name: China Securities Regulatory Commission (CSRC)
+    type: regulator
+    url: http://www.csrc.gov.cn
+    coverage:
+      - securities_markets
+      - listed_companies
+    reliability: primary
+    update_frequency: monthly
+
+  - id: worldbank
+    name: World Bank Open Data
+    type: intergovernmental
+    url: https://data.worldbank.org/country/china
+    api:
+      base_url: https://api.worldbank.org/v2
+      format: json
+      auth: none
+      spine_tool: data_spine.worldbank
+    coverage:
+      - gdp
+      - population
+      - inflation
+      - trade
+      - development_indicators
+    reliability: primary
+    update_frequency: annual
+
+  - id: imf
+    name: IMF World Economic Outlook (DataMapper)
+    type: intergovernmental
+    url: https://www.imf.org/en/Publications/WEO
+    api:
+      base_url: https://www.imf.org/external/datamapper/api/v1
+      format: json
+      auth: none
+      spine_tool: data_spine.imf
+    coverage:
+      - gdp_growth
+      - inflation
+      - government_debt
+      - current_account
+    reliability: primary
+    update_frequency: quarterly

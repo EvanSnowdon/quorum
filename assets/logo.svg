@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="320" viewBox="0 0 320 320" role="img" aria-label="Quorum">
+  <defs>
+    <linearGradient id="q" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1f3a5f"/>
+      <stop offset="1" stop-color="#3d6db0"/>
+    </linearGradient>
+  </defs>
+  <!-- Roundtable mark: a quorum of seats around the table, one seat = the engagement lead -->
+  <circle cx="160" cy="160" r="148" fill="none" stroke="url(#q)" stroke-width="10"/>
+  <circle cx="160" cy="160" r="64" fill="url(#q)"/>
+  <g fill="#3d6db0">
+    <circle cx="160" cy="44"  r="16"/>
+    <circle cx="262" cy="102" r="16"/>
+    <circle cx="262" cy="218" r="16"/>
+    <circle cx="160" cy="276" r="16"/>
+    <circle cx="58"  cy="218" r="16"/>
+  </g>
+  <!-- The dissenting seat: the red team is always at the table -->
+  <circle cx="58" cy="102" r="16" fill="#c0504d"/>
+  <!-- Q tail -->
+  <rect x="196" y="196" width="64" height="18" rx="9" fill="url(#q)" transform="rotate(45 196 196)"/>
+</svg>

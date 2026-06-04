@@ -1,0 +1,320 @@
+# Quorum crew configuration: the single source of truth for staffing.
+#
+# This file maps analysts to methodology skills and report sections, and maps
+# the three compute tiers (scan / standard / due_diligence) onto a roster of
+# those analysts.
+#
+# Each entry under `analysts` is keyed by a stable analyst id (used as the
+# working-paper filename and in task contracts). Fields:
+#   role:    the analyst's title, used to frame the system prompt.
+#   section: the report section this analyst owns. Section names are unique
+#            across the roster -- no two analysts write the same section.
+#   skill:   the analyst-skills/<name> directory whose SKILL.md drives the
+#            methodology. The SAME skill may staff more than one role: several
+#            seats run `pestel-analyst` through a macro, regulatory, or ESG
+#            lens, and competition seats reuse `five-forces-analyst`. The skill
+#            is the method; the analyst is the assignment.
+#   tools:   the default tool allowlist for the role. Vocabulary (resolved by
+#            the data spine, owned by the data engineer):
+#              worldbank      World Bank indicator series (universal)
+#              imf            IMF series (universal)
+#              local_context  region-specific official sources from the active
+#                             source pack
+#              web_search     secondary sources, only when a contract permits it
+#              memory_read    read the markdown-in-git memory layer
+#
+# The quality gates -- fact-checker, red team, chief editor -- are NOT listed
+# here. They are fixed parts of the pipeline, instantiated directly by the
+# orchestrator, identical for every engagement. `pyramid-editor` is the skill
+# the chief editor runs at assembly time.
+#
+# `tiers.<tier>.roster` lists analyst keys in priority order. The orchestrator
+# enforces a hard headcount cap per tier (the effort budget) and trims from the
+# tail if a roster is longer than the budget allows. Calibration targets:
+# scan <= 6, standard <= 14, due_diligence <= 26.
+
+version: 1
+
+tiers:
+  scan:
+    description: First look at a market. Orientation, not decisions.
+    roster:
+      - market_sizing
+      - industry_structure
+      - macro_context
+      - demand_jobs
+      - valuation
+      - strategy_critic
+  standard:
+    description: The default. A full methodology sweep with sourced data.
+    roster:
+      - market_sizing
+      - demand_jobs
+      - growth_horizons
+      - growth_vectors
+      - industry_structure
+      - firm_power
+      - strategy_choice
+      - market_creation
+      - macro_context
+      - regulatory
+      - value_chain
+      - technology
+      - valuation
+      - strategy_critic
+  due_diligence:
+    description: Decision-grade. Multiple experts per framework, deeper queries.
+    roster:
+      - market_sizing
+      - market_sizing_bottom_up
+      - demand_jobs
+      - demand_substitution
+      - growth_horizons
+      - growth_vectors
+      - industry_structure
+      - industry_rivalry
+      - firm_power
+      - strategy_choice
+      - market_creation
+      - go_to_market
+      - macro_context
+      - regulatory
+      - geopolitical
+      - value_chain
+      - operations_cost
+      - technology
+      - innovation_disruption
+      - valuation
+      - unit_economics
+      - capital_intensity
+      - talent
+      - sustainability
+      - strategy_critic
+      - strategy_critic_contra
+
+# ---------------------------------------------------------------------------
+# Analyst roster. The firm's org chart, by layer.
+# ---------------------------------------------------------------------------
+analysts:
+
+  # --- Orchestration ---------------------------------------------------------
+  # The engagement manager runs `mece-engagement-manager` to scope the brief
+  # into a mutually-exclusive, collectively-exhaustive task plan. The
+  # orchestrator invokes this skill during scoping rather than as a report
+  # section, but the seat is declared here so the mapping stays in one place.
+  engagement_manager:
+    role: Engagement Manager
+    section: Engagement Plan
+    skill: mece-engagement-manager
+    tools:
+      - memory_read
+
+  # --- Market & demand -------------------------------------------------------
+  market_sizing:
+    role: Market Sizing Analyst
+    section: Market Size & Growth
+    skill: tam-sam-som-analyst
+    tools:
+      - worldbank
+      - imf
+      - local_context
+      - web_search
+  market_sizing_bottom_up:
+    role: Bottom-Up Market Sizing Analyst
+    section: Market Size & Growth (Bottom-Up Cross-Check)
+    skill: tam-sam-som-analyst
+    tools:
+      - local_context
+      - web_search
+  demand_jobs:
+    role: Demand & Jobs-to-Be-Done Analyst
+    section: Customer Demand & Unmet Needs
+    skill: jtbd-disruption-analyst
+    tools:
+      - local_context
+      - web_search
+  demand_substitution:
+    role: Substitution Threat Analyst
+    section: Demand-Side Substitution Threats
+    skill: jtbd-disruption-analyst
+    tools:
+      - web_search
+  growth_horizons:
+    role: Growth Horizons Analyst
+    section: Growth Outlook (Three Horizons)
+    skill: three-horizons-analyst
+    tools:
+      - worldbank
+      - local_context
+      - web_search
+  growth_vectors:
+    role: Growth Strategy Analyst
+    section: Growth Vectors (Product / Market)
+    skill: ansoff-analyst
+    tools:
+      - local_context
+      - web_search
+
+  # --- Competition & strategy ------------------------------------------------
+  industry_structure:
+    role: Industry Structure Analyst
+    section: Industry Structure & Profit Pool
+    skill: five-forces-analyst
+    tools:
+      - worldbank
+      - local_context
+      - web_search
+  industry_rivalry:
+    role: Competitive Rivalry Analyst
+    section: Competitive Landscape & Rivalry
+    skill: five-forces-analyst
+    tools:
+      - local_context
+      - web_search
+  firm_power:
+    role: Competitive Advantage Analyst
+    section: Sources of Durable Advantage
+    skill: seven-powers-analyst
+    tools:
+      - local_context
+      - web_search
+  strategy_choice:
+    role: Strategy Choice Analyst
+    section: Where-to-Play / How-to-Win
+    skill: playing-to-win-analyst
+    tools:
+      - local_context
+      - web_search
+  market_creation:
+    role: Market Creation Analyst
+    section: Uncontested-Space Opportunities
+    skill: blue-ocean-analyst
+    tools:
+      - local_context
+      - web_search
+  go_to_market:
+    role: Go-to-Market Analyst
+    section: Adoption & Go-to-Market Path
+    skill: crossing-the-chasm-analyst
+    tools:
+      - local_context
+      - web_search
+
+  # --- Macro, regulatory & context (includes local_context) ------------------
+  macro_context:
+    role: Macro & Country Context Analyst
+    section: Macro & Country Context
+    skill: pestel-analyst
+    tools:
+      - worldbank
+      - imf
+      - local_context
+      - web_search
+  regulatory:
+    role: Regulatory & Legal Analyst
+    section: Regulatory & Legal Environment
+    skill: pestel-analyst
+    tools:
+      - local_context
+      - web_search
+  geopolitical:
+    role: Geopolitical & Trade Analyst
+    section: Geopolitical & Trade Exposure
+    skill: pestel-analyst
+    tools:
+      - imf
+      - local_context
+      - web_search
+
+  # --- Operations & value chain ----------------------------------------------
+  value_chain:
+    role: Value Chain Analyst
+    section: Value Chain & Margin Distribution
+    skill: value-chain-analyst
+    tools:
+      - local_context
+      - web_search
+  operations_cost:
+    role: Operations & Cost Structure Analyst
+    section: Cost Structure & Operating Leverage
+    skill: value-chain-analyst
+    tools:
+      - worldbank
+      - local_context
+      - web_search
+
+  # --- Technology & innovation -----------------------------------------------
+  technology:
+    role: Technology Landscape Analyst
+    section: Technology Landscape & Maturity
+    skill: three-horizons-analyst
+    tools:
+      - web_search
+  innovation_disruption:
+    role: Innovation & Disruption Analyst
+    section: Disruptive Innovation Watch
+    skill: jtbd-disruption-analyst
+    tools:
+      - web_search
+
+  # --- Financial & capital ---------------------------------------------------
+  valuation:
+    role: Valuation Analyst
+    section: Valuation & Economics
+    skill: valuation-analyst
+    tools:
+      - worldbank
+      - imf
+      - local_context
+      - web_search
+  unit_economics:
+    role: Unit Economics Analyst
+    section: Unit Economics & Profitability
+    skill: valuation-analyst
+    tools:
+      - local_context
+      - web_search
+  capital_intensity:
+    role: Capital & Investment Analyst
+    section: Capital Intensity & Investment Climate
+    skill: tam-sam-som-analyst
+    tools:
+      - worldbank
+      - imf
+      - local_context
+      - web_search
+
+  # --- Talent & sustainability -----------------------------------------------
+  talent:
+    role: Talent & Labour Market Analyst
+    section: Talent & Labour Market
+    skill: pestel-analyst
+    tools:
+      - worldbank
+      - local_context
+      - web_search
+  sustainability:
+    role: Sustainability & ESG Analyst
+    section: Sustainability & ESG Exposure
+    skill: pestel-analyst
+    tools:
+      - worldbank
+      - local_context
+      - web_search
+
+  # --- Cross-cutting strategy critic -----------------------------------------
+  # `good-strategy-critic` is staffed as a section analyst (a strategy-quality
+  # read on the thesis) and is distinct from the red-team gate, which the
+  # orchestrator runs over the whole draft in the quality layer.
+  strategy_critic:
+    role: Strategy Critic
+    section: Strategy Quality Assessment
+    skill: good-strategy-critic
+    tools:
+      - memory_read
+  strategy_critic_contra:
+    role: Contrarian Strategy Critic
+    section: Strategy Quality Assessment (Contrarian Read)
+    skill: good-strategy-critic
+    tools:
+      - memory_read

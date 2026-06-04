@@ -1,0 +1,95 @@
+country: JP
+country_name: Japan
+language: ja
+notes: >
+  The e-Stat portal is the Japanese government's unified statistics gateway and
+  offers a JSON API that requires a free application ID. Bank of Japan series are
+  published through the BOJ Time-Series Data Search. World Bank and IMF series
+  for Japan are keyless and wired into the spine. IMF DataMapper uses the country
+  code JPN.
+
+sources:
+  - id: estat
+    name: e-Stat (Portal Site of Official Statistics of Japan)
+    type: statistics
+    url: https://www.e-stat.go.jp
+    api:
+      base_url: https://api.e-stat.go.jp/rest/3.0/app
+      format: json
+      auth: registration
+    coverage:
+      - gdp
+      - national_accounts
+      - prices
+      - employment
+      - demographics
+      - industry_output
+    reliability: primary
+    update_frequency: monthly
+
+  - id: cao
+    name: Cabinet Office, Government of Japan (National Accounts)
+    type: statistics
+    url: https://www.esri.cao.go.jp/en/sna/menu.html
+    coverage:
+      - gdp
+      - national_accounts
+    reliability: primary
+    update_frequency: quarterly
+
+  - id: boj
+    name: Bank of Japan (BOJ Time-Series Data Search)
+    type: central_bank
+    url: https://www.boj.or.jp/en
+    coverage:
+      - interest_rates
+      - money_supply
+      - exchange_rates
+      - tankan_survey
+    reliability: primary
+    update_frequency: monthly
+
+  - id: fsa
+    name: Financial Services Agency (FSA)
+    type: regulator
+    url: https://www.fsa.go.jp/en
+    coverage:
+      - financial_supervision
+      - securities_markets
+    reliability: primary
+    update_frequency: quarterly
+
+  - id: worldbank
+    name: World Bank Open Data
+    type: intergovernmental
+    url: https://data.worldbank.org/country/japan
+    api:
+      base_url: https://api.worldbank.org/v2
+      format: json
+      auth: none
+      spine_tool: data_spine.worldbank
+    coverage:
+      - gdp
+      - population
+      - inflation
+      - trade
+      - development_indicators
+    reliability: primary
+    update_frequency: annual
+
+  - id: imf
+    name: IMF World Economic Outlook (DataMapper)
+    type: intergovernmental
+    url: https://www.imf.org/en/Publications/WEO
+    api:
+      base_url: https://www.imf.org/external/datamapper/api/v1
+      format: json
+      auth: none
+      spine_tool: data_spine.imf
+    coverage:
+      - gdp_growth
+      - inflation
+      - government_debt
+      - current_account
+    reliability: primary
+    update_frequency: quarterly

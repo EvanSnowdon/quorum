@@ -1,0 +1,95 @@
+country: ZZ
+country_name: Global (region-agnostic fallback)
+language: en
+notes: >
+  Not a country pack. This is the fallback the spine resolves to when no
+  country-specific pack exists for an engagement's region: it lists only the
+  keyless intergovernmental series that apply everywhere, so an uncovered region
+  still gets a queryable baseline rather than nothing. World Bank and IMF series
+  are keyless and wired into the spine directly. OECD, UN Comtrade, and UN Data
+  are recorded as machine sources without a wired spine tool for now (SDMX and
+  the Comtrade REST API are roadmap work); a worker knows the endpoints exist and
+  can reach them where the contract permits. Country codes vary by source: World
+  Bank accepts alpha-2 or alpha-3, IMF DataMapper expects alpha-3, Comtrade uses
+  UN M49 numeric codes.
+
+sources:
+  - id: worldbank
+    name: World Bank Open Data
+    type: intergovernmental
+    url: https://data.worldbank.org
+    api:
+      base_url: https://api.worldbank.org/v2
+      format: json
+      auth: none
+      spine_tool: data_spine.worldbank
+    coverage:
+      - gdp
+      - population
+      - inflation
+      - trade
+      - development_indicators
+    reliability: primary
+    update_frequency: annual
+
+  - id: imf
+    name: IMF World Economic Outlook (DataMapper)
+    type: intergovernmental
+    url: https://www.imf.org/en/Publications/WEO
+    api:
+      base_url: https://www.imf.org/external/datamapper/api/v1
+      format: json
+      auth: none
+      spine_tool: data_spine.imf
+    coverage:
+      - gdp_growth
+      - inflation
+      - government_debt
+      - current_account
+    reliability: primary
+    update_frequency: quarterly
+
+  - id: oecd
+    name: OECD Data (SDMX)
+    type: intergovernmental
+    url: https://data.oecd.org
+    api:
+      base_url: https://sdmx.oecd.org/public/rest
+      format: sdmx
+      auth: none
+    coverage:
+      - gdp
+      - national_accounts
+      - prices
+      - employment
+      - productivity
+    reliability: primary
+    update_frequency: quarterly
+
+  - id: comtrade
+    name: UN Comtrade
+    type: intergovernmental
+    url: https://comtradeplus.un.org
+    api:
+      base_url: https://comtradeapi.un.org/data/v1
+      format: json
+      auth: registration
+    coverage:
+      - trade
+      - imports
+      - exports
+      - tariffs
+    reliability: primary
+    update_frequency: annual
+
+  - id: undata
+    name: UN Data (UNdata)
+    type: intergovernmental
+    url: https://data.un.org
+    coverage:
+      - demographics
+      - national_accounts
+      - development_indicators
+      - energy
+    reliability: secondary
+    update_frequency: annual
