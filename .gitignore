@@ -63,6 +63,8 @@ ENV/
 # Quorum runtime output
 engagements/
 .quorum-memory/
+/report.md
+/report.html
 
 # Internal workspace (never ships)
 _ai_workshop/
