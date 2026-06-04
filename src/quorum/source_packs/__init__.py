@@ -60,10 +60,14 @@ def load_pack(region: str, fallback: bool = True) -> SourcePack:
         if fallback and key != GLOBAL_REGION:
             global_path = _PACK_DIR / f"{GLOBAL_REGION}.yaml"
             if global_path.is_file():
-                pack = _parse_pack(global_path)
-                # Cache under the requested key too: a second miss for the same
-                # region resolves straight to the fallback without re-reading.
-                _CACHE[key] = pack
+                # Cache the fallback under its own key only. Caching it under
+                # the requested key would poison later strict-mode lookups for
+                # the same region: they would hit the cache and return the
+                # fallback instead of raising.
+                pack = _CACHE.get(GLOBAL_REGION)
+                if pack is None:
+                    pack = _parse_pack(global_path)
+                    _CACHE[GLOBAL_REGION] = pack
                 return pack
         available = ", ".join(available_regions()) or "<none>"
         raise SourcePackNotFoundError(
