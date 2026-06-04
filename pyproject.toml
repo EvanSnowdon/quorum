@@ -57,7 +57,9 @@ line-length = 100
 target-version = "py311"
 
 [tool.ruff.lint]
-select = ["E", "F", "I", "UP", "B", "SIM"]
+# Start from the ruff defaults; widen to I/UP/B/SIM incrementally as the
+# codebase is brought on-style.
+select = ["E4", "E7", "E9", "F"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

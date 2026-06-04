@@ -109,6 +109,17 @@ analysts:
     tools:
       - memory_read
 
+  # The chief editor runs `pyramid-editor` at assembly time, as a fixed quality
+  # gate rather than a section writer. Declared here, like the engagement
+  # manager, so the skill-to-seat mapping stays complete in one place; tier
+  # rosters never staff this seat.
+  chief_editor:
+    role: Chief Editor
+    section: Report Assembly
+    skill: pyramid-editor
+    tools:
+      - memory_read
+
   # --- Market & demand -------------------------------------------------------
   market_sizing:
     role: Market Sizing Analyst
