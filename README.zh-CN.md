@@ -72,6 +72,8 @@ quorum --region CN --industry "electric vehicles" --depth standard
 
 完整项目跑完后，报告包写入 `engagements/<timestamp>-cn-electric-vehicles/`，包含最终报告、各专家工作底稿、数据来源台账与质量关审查记录。
 
+想先看产出长什么样？[`examples/cn-electric-vehicles.md`](examples/cn-electric-vehicles.md) 是一次真实单命令运行的完整报告（deepseek-chat，API 成本几美分）——包括红队对报告自身论点的反方意见。
+
 ### 模型自选
 
 Quorum 模型无关，每次运行都可指定任意供应商与模型：

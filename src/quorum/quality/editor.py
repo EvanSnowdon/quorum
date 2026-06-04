@@ -9,6 +9,7 @@ between sections and writes the executive summary last.
 
 from __future__ import annotations
 
+import os
 from typing import TYPE_CHECKING
 
 from ..llm import LLM
@@ -37,7 +38,7 @@ def compile_report(
     sections: dict[str, str],
     dissent: str,
     llm: LLM,
-    max_tokens: int = 8000,
+    max_tokens: int | None = None,
 ) -> str:
     """Assemble the final report from the sections and the dissent memo.
 
@@ -45,7 +46,15 @@ def compile_report(
     (conclusion first), the body sections, a scenario analysis (optimistic /
     base / pessimistic), the red team's Dissenting View reproduced verbatim,
     and a data-and-confidence appendix.
+
+    ``max_tokens`` defaults to ``QUORUM_EDITOR_MAX_TOKENS`` (or 8000). A long
+    engagement can outgrow the default and truncate the final section; raise
+    the ceiling if your provider allows longer outputs (many cap at 8192 —
+    DeepSeek among them — which is why 8000 stays the safe default). The full
+    dissent always survives in ``gates/red_team.md`` in the engagement bundle.
     """
+    if max_tokens is None:
+        max_tokens = int(os.getenv("QUORUM_EDITOR_MAX_TOKENS", "8000"))
     body = "\n\n".join(f"### Section: {key}\n{text}" for key, text in sections.items())
     prompt = (
         f"Engagement: {engagement.industry} in {engagement.region}, "
