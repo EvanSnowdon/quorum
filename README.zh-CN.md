@@ -10,8 +10,7 @@
 
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License: MIT"></a>
-  <a href="#"><img src="https://img.shields.io/badge/CI-passing-brightgreen.svg" alt="CI"></a>
-  <a href="#"><img src="https://img.shields.io/badge/PyPI-quorum--firm-orange.svg" alt="PyPI"></a>
+  <a href="https://github.com/EvanSnowdon/quorum/actions/workflows/ci.yml"><img src="https://github.com/EvanSnowdon/quorum/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
   <a href="#"><img src="https://img.shields.io/badge/python-3.11%2B-blue.svg" alt="Python 3.11+"></a>
 </p>
 
@@ -73,15 +72,31 @@ quorum --region CN --industry "electric vehicles" --depth standard
 
 完整项目跑完后，报告包写入 `engagements/<timestamp>-cn-electric-vehicles/`，包含最终报告、各专家工作底稿、数据来源台账与质量关审查记录。
 
-Quorum 模型无关。默认面向 Anthropic 模型，可用环境变量覆盖：
+### 模型自选
+
+Quorum 模型无关，每次运行都可指定任意供应商与模型：
 
 ```bash
-QUORUM_PROVIDER=openai          # anthropic | openai | local
-QUORUM_MODEL=gpt-4o-mini        # 单模型覆盖
-QUORUM_LEAD_MODEL=...           # 编排 / 主编模型
-QUORUM_WORKER_MODEL=...         # 专家 / 分析师模型
-QUORUM_BASE_URL=...             # 任意 OpenAI 兼容端点（含本地服务）
+# Anthropic（默认）
+export ANTHROPIC_API_KEY=sk-ant-...
+quorum --region CN --industry "electric vehicles"
+
+# OpenAI
+export OPENAI_API_KEY=sk-...
+quorum --region CN --industry "electric vehicles" --provider openai --model gpt-4o
+
+# DeepSeek、Qwen、Kimi、vLLM —— 任意 OpenAI 兼容 API
+export OPENAI_API_KEY=<你的供应商key>
+quorum --region CN --industry "electric vehicles" \
+  --provider openai --base-url https://api.deepseek.com --model deepseek-chat
+
+# 完全本地（Ollama）—— 免费，数据不出本机
+export OPENAI_API_KEY=ollama   # 任意非空值即可，本地服务不校验
+quorum --region CN --industry "electric vehicles" \
+  --provider openai --base-url http://localhost:11434/v1 --model qwen3
 ```
+
+用 `--lead-model` / `--worker-model` 可拆分角色——编排/红队/主编用强模型，并行分析师用便宜的快模型。同名环境变量（`QUORUM_PROVIDER`、`QUORUM_MODEL`、`QUORUM_LEAD_MODEL`、`QUORUM_WORKER_MODEL`、`QUORUM_BASE_URL`）或 `.env` 亦可配置；命令行参数优先。
 
 ## 功能特性
 

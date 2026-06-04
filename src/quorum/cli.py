@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import asyncio
+import os
 from pathlib import Path
 
 from .orchestrator import Engagement, ManagingPartner
@@ -42,7 +43,55 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         default="./engagements",
         help="Directory for engagement bundles. Default: ./engagements.",
     )
+
+    models = parser.add_argument_group(
+        "model selection",
+        "Pick any provider/model per run. Flags override QUORUM_* environment "
+        "variables and .env. The 'openai' provider drives any OpenAI-compatible "
+        "endpoint (DeepSeek, Qwen, Kimi, vLLM, Ollama, ...) via --base-url.",
+    )
+    models.add_argument(
+        "--provider",
+        choices=["anthropic", "openai"],
+        help="LLM provider. Default: anthropic (or QUORUM_PROVIDER).",
+    )
+    models.add_argument(
+        "--model",
+        help="Model for both roles (e.g. claude-sonnet-4-6, gpt-4o, deepseek-chat).",
+    )
+    models.add_argument(
+        "--lead-model",
+        help="Override the lead model only (engagement manager, red team, editor).",
+    )
+    models.add_argument(
+        "--worker-model",
+        help="Override the worker model only (the parallel analysts).",
+    )
+    models.add_argument(
+        "--base-url",
+        help="OpenAI-compatible base URL (e.g. https://api.deepseek.com or "
+        "http://localhost:11434/v1 for Ollama).",
+    )
     return parser.parse_args(argv)
+
+
+def _apply_model_flags(args: argparse.Namespace) -> None:
+    """Map model-selection flags onto the QUORUM_* environment variables.
+
+    The engine reads model configuration exclusively from the environment
+    (see :mod:`quorum.llm`), so the CLI translates flags into the same
+    variables. Set after ``load_dotenv`` so a flag always beats a .env entry.
+    """
+    mapping = {
+        "QUORUM_PROVIDER": args.provider,
+        "QUORUM_MODEL": args.model,
+        "QUORUM_LEAD_MODEL": args.lead_model,
+        "QUORUM_WORKER_MODEL": args.worker_model,
+        "QUORUM_BASE_URL": args.base_url,
+    }
+    for key, value in mapping.items():
+        if value:
+            os.environ[key] = value
 
 
 def main(argv: list[str] | None = None) -> None:
@@ -56,6 +105,7 @@ def main(argv: list[str] | None = None) -> None:
         pass
 
     args = _parse_args(argv)
+    _apply_model_flags(args)
     engagement = Engagement(
         region=args.region,
         industry=args.industry,

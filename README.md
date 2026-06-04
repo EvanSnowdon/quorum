@@ -10,8 +10,7 @@
 
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License: MIT"></a>
-  <a href="#"><img src="https://img.shields.io/badge/CI-passing-brightgreen.svg" alt="CI"></a>
-  <a href="#"><img src="https://img.shields.io/badge/PyPI-quorum--firm-orange.svg" alt="PyPI"></a>
+  <a href="https://github.com/EvanSnowdon/quorum/actions/workflows/ci.yml"><img src="https://github.com/EvanSnowdon/quorum/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
   <a href="#"><img src="https://img.shields.io/badge/python-3.11%2B-blue.svg" alt="Python 3.11+"></a>
 </p>
 
@@ -75,15 +74,31 @@ quorum --region CN --industry "electric vehicles" --depth standard
 
 The engagement runs end to end and writes a full report bundle to `engagements/<timestamp>-cn-electric-vehicles/`, including the final report, per-expert working papers, the source ledger, and quality-gate findings.
 
-Quorum is model-agnostic. Defaults target Anthropic models; override with environment variables:
+### Bring your own model
+
+Quorum is model-agnostic. Pick any provider and model per run:
 
 ```bash
-QUORUM_PROVIDER=openai          # anthropic | openai | local
-QUORUM_MODEL=gpt-4o-mini        # single-model override
-QUORUM_LEAD_MODEL=...           # orchestrator / editor model
-QUORUM_WORKER_MODEL=...         # expert / analyst model
-QUORUM_BASE_URL=...             # any OpenAI-compatible endpoint, incl. local servers
+# Anthropic (default)
+export ANTHROPIC_API_KEY=sk-ant-...
+quorum --region CN --industry "electric vehicles"
+
+# OpenAI
+export OPENAI_API_KEY=sk-...
+quorum --region CN --industry "electric vehicles" --provider openai --model gpt-4o
+
+# DeepSeek, Qwen, Kimi, vLLM — any OpenAI-compatible API
+export OPENAI_API_KEY=<your-provider-key>
+quorum --region CN --industry "electric vehicles" \
+  --provider openai --base-url https://api.deepseek.com --model deepseek-chat
+
+# Fully local via Ollama — free, nothing leaves your machine
+export OPENAI_API_KEY=ollama   # any non-empty value; local servers ignore it
+quorum --region CN --industry "electric vehicles" \
+  --provider openai --base-url http://localhost:11434/v1 --model qwen3
 ```
+
+Use `--lead-model` / `--worker-model` to split roles — a strong model for orchestration, red-teaming, and editing; a cheap fast one for the parallel analysts. The same settings are available as environment variables (`QUORUM_PROVIDER`, `QUORUM_MODEL`, `QUORUM_LEAD_MODEL`, `QUORUM_WORKER_MODEL`, `QUORUM_BASE_URL`) or in `.env`; flags win.
 
 ## Features
 
