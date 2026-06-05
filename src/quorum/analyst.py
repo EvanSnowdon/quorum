@@ -69,6 +69,12 @@ class Analyst:
     time so the orchestrator can plan a crew without paying for every skill
     body up front. ``tools`` is the default allowlist for the role; the
     orchestrator may narrow it per contract.
+
+    ``phase`` places the seat in the two-phase dispatch: phase 1 establishes
+    the strategic picture, phase 2 (valuation, critique) runs after phase 1 is
+    fact-checked, with the checked sections in context. ``brief`` is an
+    optional seat-specific instruction the orchestrator appends to the
+    contract objective.
     """
 
     key: str
@@ -76,6 +82,8 @@ class Analyst:
     section: str
     skill: str
     tools: list[str]
+    phase: int = 1
+    brief: str = ""
 
     def system_prompt(self) -> str:
         """Assemble the analyst's system prompt.

@@ -14,14 +14,16 @@ other; all coordination flows through the orchestrator and the filesystem.
 
 ```
 CLI ──► Engagement Manager (lead model)
-              │  decompose brief into task contracts
-              ├──► Expert workers (worker model, parallel)
+              │  decompose brief into task contracts (Scope Lock first)
+              ├──► Phase-1 experts (worker model, parallel) ─► fact-check
+              ├──► Phase-2 experts (valuation/critique,      ─► fact-check
+              │         with checked phase-1 sections in context)
               │         │  query data spine, write working papers
               │         ▼
               │    engagements/<id>/workpapers/*.md
-              ├──► Quality gates (sequential: fact-check → red team → editor)
+              ├──► Red team ─► editor (editorial blocks only)
               ▼
-        engagements/<id>/report.md
+        engagements/<id>/report.md   (assembled in code, sections verbatim)
 ```
 
 Two models are in play: a **lead model** for the engagement manager and the
@@ -185,14 +187,42 @@ draft plus the artifacts it needs, and produces a written verdict under
    labels, the strongest case for the opposite recommendation. Output: a memo.
    The editor must either address each point or explicitly accept the risk in
    the report's limitations section.
-3. **Chief editor** (lead model). Owns the deliverable: enforces pyramid
-   structure (the `pyramid-editor` skill), reconciles contradictions between
-   working papers, prunes anything that doesn't serve the reader, writes the
-   executive summary last, and signs off on the limitations section.
+3. **Chief editor** (lead model). Owns the editorial voice, not the body: it
+   writes the executive summary (gated, pyramid-style), the reconciliation of
+   the red team's arguments (accept-and-adjust or rebut-with-citation, never
+   silence), and the scenario analysis. The body sections and the red-team
+   memo enter the deliverable verbatim through programmatic assembly (below).
 
 A report that cannot clear a gate ships with the failure documented rather
 than silently lowered standards: gate verdicts are part of the deliverable
 bundle.
+
+## Two-phase dispatch and programmatic assembly
+
+Two structural rules were added in v0.2, both motivated by review of real
+deliverables.
+
+**Two-phase dispatch.** Seats in `crews.yaml` carry an optional `phase` (1 by
+default). Phase 1 establishes the strategic picture — sizing, structure, and
+2–3 *named entry plays* from the strategy seat — and is fact-checked before
+phase 2 (valuation, unit economics, strategy critique) is dispatched with the
+checked phase-1 sections in its contracts' context. The point is causal order:
+valuation prices the specific plays actually proposed, never a hypothetical
+generic entrant, and must reconcile or mark down any play whose profitability
+assumptions conflict with the structure diagnosis. The tier headcount cap is
+applied before the phase split; a tier whose budget trims away every phase-2
+seat simply skips phase 2.
+
+**Programmatic assembly.** The final `report.md` is assembled in code
+(`output/report.py`), not rewritten by a model: header (with a Scope Lock
+summary line) — executive summary — fact-checked sections embedded verbatim,
+in roster order, under their human-readable titles — scenario analysis —
+reconciliation — the red team's memo verbatim — appendix. The editor's three
+blocks are the only model-authored assembly text, produced in at most two
+completions, so no provider output ceiling can truncate the body and no
+rewrite can paraphrase the dissent away. Internal analyst keys never appear in
+the deliverable; they survive only as working-paper filenames inside the
+engagement bundle.
 
 ## Module map
 

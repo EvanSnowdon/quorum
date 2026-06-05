@@ -59,6 +59,16 @@ two independent methods. Feeds `valuation-analyst` and `ansoff-analyst`.
   `{region}` (the active source pack). Currency and year must be explicit.
 - Never present a single number without its assumptions. A defensible range beats
   a false-precision point estimate; give low/base/high where uncertainty is high.
+- **Confidence propagation (hard rule).** Any derived figure carries a confidence
+  no higher than the *minimum* confidence of its inputs, and must show the
+  propagation chain (e.g. `0.8 × 0.4 inputs → derived figure capped at 0.4`).
+  A SOM built on a 0.4-confidence penetration assumption is a 0.4-confidence SOM,
+  whatever the quality of the other inputs.
+- **Precision discipline (hard rule).** Match stated precision to confidence: a
+  figure below 0.7 confidence gets at most 2 significant figures; below 0.5,
+  only a range or an order-of-magnitude statement ("low tens of billions") is
+  permitted — never a precise point estimate. Any scenario probability is an
+  opinion and must be marked "(subjective)".
 - Close with the **TAM / SAM / SOM figures (with units, currency, year), the
   bottom-up vs top-down reconciliation, and the key swing assumption** that most
   moves the result.

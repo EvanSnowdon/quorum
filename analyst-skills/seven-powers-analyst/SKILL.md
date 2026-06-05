@@ -59,6 +59,15 @@ and durability-focused.
    the rival's best move to neutralize it, and why doesn't it work?
 6. **Conclude on the moat.** State which powers are real, which are aspirational,
    and the overall durability of advantage.
+7. **For market-entry engagements, name the entry plays.** When the engagement is
+   a market-entry assessment, do not stop at diagnosing incumbents' powers:
+   produce **2–3 named entry plays** a new entrant could run. For each play give
+   (a) a one-line positioning statement, (b) why it avoids or neutralizes the
+   binding constraint identified in the structure analysis, (c) the share logic
+   (which customers it wins and from whom), and (d) its weakest premise — the
+   assumption most likely to break. A generic "enter the market" is not a play;
+   downstream valuation work prices these named plays, never an undifferentiated
+   entrant.
 
 ## Output rules
 

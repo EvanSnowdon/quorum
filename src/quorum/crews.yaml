@@ -22,6 +22,15 @@
 #                             source pack
 #              web_search     secondary sources, only when a contract permits it
 #              memory_read    read the markdown-in-git memory layer
+#   phase:   optional dispatch phase, 1 (default) or 2. Phase 1 seats run
+#            first, in parallel, and establish the strategic picture (sizing,
+#            structure, named entry plays). Phase 2 seats run after phase 1 is
+#            fact-checked, with the checked phase-1 sections in their context,
+#            so valuation and critique price *specific* strategies rather than
+#            a hypothetical generic entrant. A seat with no `phase` is phase 1.
+#   brief:   optional seat-specific instruction appended to the contract
+#            objective — used where the assignment narrows the skill's general
+#            method (e.g. the strategy seat must produce named entry plays).
 #
 # The quality gates -- fact-checker, red team, chief editor -- are NOT listed
 # here. They are fixed parts of the pipeline, instantiated directly by the
@@ -191,8 +200,13 @@ analysts:
       - web_search
   strategy_choice:
     role: Strategy Choice Analyst
-    section: Where-to-Play / How-to-Win
+    section: Where-to-Play / How-to-Win (Entry Plays)
     skill: playing-to-win-analyst
+    brief: >
+      Conclude with 2-3 named entry plays, not a single generic strategy. For
+      each play state: a one-line positioning, the target-share logic (which
+      customers it wins and from whom), and the key capability premises that
+      must hold. Downstream valuation prices these named plays individually.
     tools:
       - local_context
       - web_search
@@ -269,10 +283,14 @@ analysts:
       - web_search
 
   # --- Financial & capital ---------------------------------------------------
+  # Valuation seats run in phase 2: they price the named entry plays produced
+  # by the phase-1 strategy seat, against the fact-checked sizing and structure
+  # sections — never a generic, undifferentiated entrant.
   valuation:
     role: Valuation Analyst
     section: Valuation & Economics
     skill: valuation-analyst
+    phase: 2
     tools:
       - worldbank
       - imf
@@ -282,6 +300,7 @@ analysts:
     role: Unit Economics Analyst
     section: Unit Economics & Profitability
     skill: valuation-analyst
+    phase: 2
     tools:
       - local_context
       - web_search
@@ -316,16 +335,19 @@ analysts:
   # --- Cross-cutting strategy critic -----------------------------------------
   # `good-strategy-critic` is staffed as a section analyst (a strategy-quality
   # read on the thesis) and is distinct from the red-team gate, which the
-  # orchestrator runs over the whole draft in the quality layer.
+  # orchestrator runs over the whole draft in the quality layer. Critics run
+  # in phase 2 so they critique the named entry plays actually proposed.
   strategy_critic:
     role: Strategy Critic
     section: Strategy Quality Assessment
     skill: good-strategy-critic
+    phase: 2
     tools:
       - memory_read
   strategy_critic_contra:
     role: Contrarian Strategy Critic
     section: Strategy Quality Assessment (Contrarian Read)
     skill: good-strategy-critic
+    phase: 2
     tools:
       - memory_read

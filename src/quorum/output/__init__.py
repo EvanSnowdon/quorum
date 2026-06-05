@@ -41,7 +41,9 @@ from .report import (
     ReportDocument,
     ReportMeta,
     ReportSection,
+    assemble_report,
     collect_sources,
+    scope_summary_line,
 )
 from .source_ledger import (
     format_observation,
@@ -60,9 +62,11 @@ __all__ = [
     "ReportMeta",
     "ReportSection",
     "UnsupportedFormatError",
+    "assemble_report",
     "claim_from_observation",
     "collect_sources",
     "export_report",
+    "scope_summary_line",
     "find_unlabeled_lines",
     "format_label",
     "format_observation",

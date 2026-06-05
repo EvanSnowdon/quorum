@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "quorum-firm"
-version = "0.1.0"
+version = "0.2.0"
 description = "Open-source AI consulting firm: methodology analyst skills plus a multi-agent engagement engine producing sourced, fact-checked market reports."
 readme = "README.md"
 license = { file = "LICENSE" }

@@ -64,6 +64,16 @@ laid bare. Downstream of sizing (`tam-sam-som-analyst`) and structure
   (the active source pack); make the risk-free rate, ERP, and tax rate explicit.
 - Never present a single number as "the value". Output a range with the key
   assumptions and a sensitivity table; flag where comps are weak.
+- **Confidence propagation (hard rule).** Any derived value carries a confidence
+  no higher than the *minimum* confidence of its inputs, and must show the
+  propagation chain (e.g. a DCF built on a 0.4-confidence revenue projection is
+  a 0.4-confidence valuation, regardless of how well-sourced the discount rate
+  is). Confidence is not laundered by arithmetic.
+- **Precision discipline (hard rule).** Match stated precision to confidence: a
+  figure below 0.7 confidence gets at most 2 significant figures; below 0.5,
+  only a range or an order-of-magnitude statement ("low tens of billions") is
+  permitted — never a precise point estimate. Any scenario probability is an
+  opinion and must be marked "(subjective)".
 - Close with the **DCF range, the comps range, the reconciled valuation range
   (with currency and date), and the single assumption** the value is most
   sensitive to.

@@ -7,7 +7,7 @@
 >
 > Model: `deepseek-chat` for every role (lead and workers). API cost: a few cents. Runtime: minutes.
 > At `scan` depth, figures draw on the model's knowledge rather than live data-spine verification — treat them as labeled, confidence-scored hypotheses, not verified facts (see *Honest limitations* in the README).
-> Assembly note: the chief editor's single-pass output hit a token ceiling inside section 4, so the dissenting view below is spliced verbatim from the red team's working paper (`gates/red_team.md`) in the engagement bundle — which is what that section reproduces by design. The ceiling is configurable via `QUORUM_EDITOR_MAX_TOKENS`.
+> Assembly note: the chief editor's single-pass output hit a token ceiling inside section 4, so the dissenting view below is spliced verbatim from the red team's working paper (`gates/red_team.md`) in the engagement bundle — which is what that section reproduces by design. As of v0.2 the report body is assembled in code and the editor writes only the editorial blocks, so this failure mode no longer exists.
 
 # Electric Vehicles in China: Depth Scan
 
