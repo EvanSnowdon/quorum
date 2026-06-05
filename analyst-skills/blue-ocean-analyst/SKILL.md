@@ -45,6 +45,7 @@ Given a `{region}` and `{industry}`, produce the **Market Segmentation** section
 - Present the **ERRC grid as a 2×2 table** and describe the resulting value curve vs. the industry's.
 - Quantify the non-customer pool with `{region}` official / first-party data and local-language sources (the active source pack) wherever possible; this is what separates blue-ocean *opportunity* from wishful product tweaks.
 - Apply the focus/divergence/tagline test and say whether the move passes.
+- **Strategy discipline.** This skill is an input lens, not the strategy seat: describe the value-innovation move and the demand it would open, but do not issue independent where-to-play recommendations or target-segment / price-band conclusions. Where the move points toward a direction, end that thread with an "Implications for the entry-strategy decision" list for the strategy seat to adjudicate.
 - Close with the **value-innovation move in one sentence**, the **primary non-customer tier targeted**, and a **one-line tagline**. ≤600 words.
 
 ## Reference

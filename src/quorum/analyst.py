@@ -9,12 +9,20 @@ truth for what a task may consume and must produce.
 
 from __future__ import annotations
 
+import os
 from dataclasses import dataclass
 
 from pydantic import BaseModel, Field
 
 from .llm import LLM
 from .skills_loader import load_skill
+
+# Per-completion output budget for a worker drafting one section. Long sections
+# were being cut mid-sentence at the old 4096 default; 6000 keeps comfortably
+# under the tightest provider ceiling in the supported set (DeepSeek's 8192)
+# while giving a working paper room to finish its closing tables. Overridable
+# per deployment via QUORUM_WORKER_MAX_TOKENS.
+_WORKER_MAX_TOKENS = int(os.getenv("QUORUM_WORKER_MAX_TOKENS", "6000"))
 
 # Global evidence rules appended to every analyst's system prompt. These hold
 # regardless of methodology and mirror the discipline enforced by the gates.
@@ -70,11 +78,13 @@ class Analyst:
     body up front. ``tools`` is the default allowlist for the role; the
     orchestrator may narrow it per contract.
 
-    ``phase`` places the seat in the two-phase dispatch: phase 1 establishes
-    the strategic picture, phase 2 (valuation, critique) runs after phase 1 is
-    fact-checked, with the checked sections in context. ``brief`` is an
-    optional seat-specific instruction the orchestrator appends to the
-    contract objective.
+    ``phase`` places the seat in the phased dispatch: phase 1 establishes the
+    fact base (sizing, structure, demand, context), phase 2 makes the strategy
+    choices against the checked fact base, and phase 3 (valuation, unit
+    economics, critique) prices and attacks the specific strategies chosen.
+    Each phase runs only after every earlier phase is fact-checked, with the
+    checked sections in its context. ``brief`` is an optional seat-specific
+    instruction the orchestrator appends to the contract objective.
     """
 
     key: str
@@ -138,4 +148,6 @@ class Analyst:
         # model, execute them under the boundary budget, and write each official
         # response to the source ledger for the fact-check gate. For now the
         # analyst reasons over the inlined context in a single turn.
-        return llm.complete(system=self.system_prompt(), prompt=prompt)
+        return llm.complete(
+            system=self.system_prompt(), prompt=prompt, max_tokens=_WORKER_MAX_TOKENS
+        )

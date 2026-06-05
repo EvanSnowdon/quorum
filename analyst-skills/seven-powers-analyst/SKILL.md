@@ -77,6 +77,12 @@ and durability-focused.
   data and local-language sources for `{region}` (the active source pack).
 - Be strict: do not count a benefit without a barrier as a power. "Good product"
   and "first mover" are not powers unless they translate into one of the seven.
+- **Strategy discipline.** This skill is an input lens, not the strategy seat:
+  any entry plays produced under Method step 7 are candidates for the strategy
+  seat, not decisions. Do not issue independent where-to-play recommendations
+  or target-segment / price-band conclusions. Where the powers read points
+  toward a direction, end that thread with an "Implications for the
+  entry-strategy decision" list for the strategy seat to adjudicate.
 - Close with the **powers actually held (named), an overall durability rating
   1–5**, and the most likely path to erosion.
 

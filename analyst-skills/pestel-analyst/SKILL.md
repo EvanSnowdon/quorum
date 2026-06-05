@@ -46,6 +46,7 @@ Given a `{region}` and `{industry}`, produce the **Macro Environment** section: 
 - Anchor each Economic/Political/Legal factor in official / first-party sources (statistics offices, central banks, regulators, official gazettes) and `{region}` local-language sources (the active source pack); macro claims without a source are weak.
 - Prune ruthlessly: present the **6 groups** but spend the words on the **key drivers**, not an undifferentiated list.
 - For each key driver, state the **channel** to the industry (demand / cost / entry / legitimacy), not just "high impact."
+- **Self-citation.** Other sections of this engagement are not data sources. When using a conclusion from another section of the same report, restate its underlying source, or label the claim `[INFERENCE]` with a cross-reference note — never `[DATA]`.
 - Close with the **3–5 key drivers of change**, their **net direction (tailwind/headwind)**, and the **single biggest external uncertainty**. ≤600 words.
 
 ## Reference

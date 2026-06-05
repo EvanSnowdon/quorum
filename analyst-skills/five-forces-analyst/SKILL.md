@@ -59,11 +59,28 @@ or a macro scan (use `pestel-analyst`).
 
 - Label every finding `[DATA]` (with a source) or `[INFERENCE]` (reasoned),
   followed by a 0–1 confidence value, e.g. `[DATA] 0.8` or `[INFERENCE] 0.5`.
+  Derived-claim confidence is the minimum of its inputs (weakest-link rule),
+  written as min(0.7, 0.6) = 0.6; never write it as a product and never
+  multiply confidence labels as if they were probabilities.
 - Prefer official / first-party figures for concentration ratios, margins, and
   capital intensity (the data spine). When citing, use the local-language source
-  appropriate to `{region}` (the active source pack).
+  appropriate to `{region}` (the active source pack). Structural figures such
+  as concentration ratios (CR-n, HHI) must state their year vintage at every
+  citation; when the same figure is cited more than once, use the same year
+  and the same source each time — never mix vintages of the same ratio.
 - Distinguish industry-level structure from firm-level position; do not let one
   dominant incumbent's results stand in for the industry.
+- **Competing-set discipline.** When an adjacent powertrain or technology form
+  competes in the target price band (PHEV/EREV against BEV, or the reverse)
+  with overlapping prices, it belongs in the substitutes and rivalry
+  assessment — a scope choice such as a BEV-only TAM never excludes it from
+  the competitive-intensity read. The market-definition denominator and the
+  competing set are separate scopes: size on the locked definition, rate the
+  forces on everything the buyer actually cross-shops.
+- **Self-citation.** Other sections of this engagement are not data sources.
+  When using a conclusion from another section of the same report, restate its
+  underlying source, or label the claim `[INFERENCE]` with a cross-reference
+  note — never `[DATA]`.
 - Close with an **overall attractiveness rating on a 1–5 scale** (1 = brutal,
   5 = highly attractive) and a one-sentence statement of the binding constraint.
 

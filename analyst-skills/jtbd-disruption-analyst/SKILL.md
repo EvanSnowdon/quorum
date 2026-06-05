@@ -60,6 +60,17 @@ side structure (`five-forces-analyst`) and growth vectors (`ansoff-analyst`).
   research is qualitative, so be explicit when a job statement is inferred.
 - Do not label every new competitor "disruptive" — reserve the term for the
   specific low-end / new-market pattern; flag sustaining innovation as such.
+- **Competing-set discipline.** When an adjacent powertrain or technology form
+  is hired for the same job in the target price band (PHEV/EREV against BEV,
+  or the reverse) with overlapping prices, it belongs in the competing set
+  and the substitution analysis — a scope choice such as a BEV-only TAM never
+  removes it from what customers actually consider. The market-definition
+  denominator and the competing set are separate scopes: jobs are hired
+  across category lines the sizing section may legitimately draw.
+- **Self-citation.** Other sections of this engagement are not data sources.
+  When using a conclusion from another section of the same report, restate its
+  underlying source, or label the claim `[INFERENCE]` with a cross-reference
+  note — never `[DATA]`.
 - Close with a **disruption-risk read (low / medium / high) plus the single most
   exposed incumbent position** and the indicator to watch.
 

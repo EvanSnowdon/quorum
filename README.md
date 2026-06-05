@@ -74,7 +74,7 @@ quorum --region CN --industry "electric vehicles" --depth standard
 
 The engagement runs end to end and writes a full report bundle to `engagements/<timestamp>-cn-electric-vehicles/`, including the final report, per-expert working papers, the source ledger, and quality-gate findings.
 
-Want to see the output first? [`examples/cn-electric-vehicles.md`](examples/cn-electric-vehicles.md) is a complete, unedited report from a real single-command run (deepseek-chat, a few cents of API spend) — including the red team's dissent arguing against the report's own thesis.
+Want to see the output first? [`examples/cn-electric-vehicles.md`](examples/cn-electric-vehicles.md) is a complete ~27,000-word report from a real single-command run at `standard` depth (deepseek-chat, under a dollar of API spend). Read the Executive Summary's decision-gated conclusion, then the Reconciliation section — the editor must answer every red-team argument, and the verbatim dissent ships in the report.
 
 ### Bring your own model
 

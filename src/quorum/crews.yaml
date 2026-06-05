@@ -22,12 +22,17 @@
 #                             source pack
 #              web_search     secondary sources, only when a contract permits it
 #              memory_read    read the markdown-in-git memory layer
-#   phase:   optional dispatch phase, 1 (default) or 2. Phase 1 seats run
-#            first, in parallel, and establish the strategic picture (sizing,
-#            structure, named entry plays). Phase 2 seats run after phase 1 is
-#            fact-checked, with the checked phase-1 sections in their context,
-#            so valuation and critique price *specific* strategies rather than
-#            a hypothetical generic entrant. A seat with no `phase` is phase 1.
+#   phase:   optional dispatch phase: 1 (default), 2, or 3. Phases run in
+#            ascending order; each phase's seats run in parallel and are
+#            fact-checked before the next phase starts, with the checked
+#            earlier-phase sections in the later contracts' context.
+#              1 = fact base (sizing, structure, demand, macro, context)
+#              2 = strategy (where-to-play choices made against the checked
+#                  fact base, so the plays cite real SAM/SOM and structure)
+#              3 = pricing & critique (valuation, unit economics, strategy
+#                  critics — priced and attacked against the checked strategy
+#                  sections, never a hypothetical generic entrant)
+#            A seat with no `phase` is phase 1.
 #   brief:   optional seat-specific instruction appended to the contract
 #            objective — used where the assignment narrows the skill's general
 #            method (e.g. the strategy seat must produce named entry plays).
@@ -56,15 +61,19 @@ tiers:
       - strategy_critic
   standard:
     description: The default. A full methodology sweep with sourced data.
+    # growth_vectors (Ansoff) and market_creation (Blue Ocean) are deliberately
+    # NOT staffed at this tier: framework sprawl. At standard depth these two
+    # lenses contributed less insight than the cost of the contradictory
+    # where-to-play recommendations they introduced (partner review, v0.2).
+    # Both remain on the due_diligence roster, where their seats run under the
+    # strategy-discipline brief (inputs to the strategy seat, not rival plays).
     roster:
       - market_sizing
       - demand_jobs
       - growth_horizons
-      - growth_vectors
       - industry_structure
       - firm_power
       - strategy_choice
-      - market_creation
       - macro_context
       - regulatory
       - value_chain
@@ -163,6 +172,12 @@ analysts:
     role: Growth Horizons Analyst
     section: Growth Outlook (Three Horizons)
     skill: three-horizons-analyst
+    brief: >
+      This seat produces input analysis for the strategy seat, not a rival
+      strategy. Do not issue independent where-to-play recommendations or
+      target price-band calls. Where the horizons read naturally points toward
+      a direction, close with an "Implications for the entry-strategy decision"
+      list and leave the choice to the strategy seat and the House View.
     tools:
       - worldbank
       - local_context
@@ -171,6 +186,13 @@ analysts:
     role: Growth Strategy Analyst
     section: Growth Vectors (Product / Market)
     skill: ansoff-analyst
+    brief: >
+      This seat produces input analysis for the strategy seat, not a rival
+      strategy. Rank the vectors, but do not issue independent where-to-play
+      recommendations or target price-band calls. Where the vector ranking
+      naturally points toward a direction, close with an "Implications for the
+      entry-strategy decision" list and leave the choice to the strategy seat
+      and the House View.
     tools:
       - local_context
       - web_search
@@ -195,6 +217,13 @@ analysts:
     role: Competitive Advantage Analyst
     section: Sources of Durable Advantage
     skill: seven-powers-analyst
+    brief: >
+      This seat produces input analysis for the strategy seat, not a rival
+      strategy. Diagnose where durable power could be built, but do not issue
+      independent where-to-play recommendations or target price-band calls.
+      Where the powers read naturally points toward a direction, close with an
+      "Implications for the entry-strategy decision" list and leave the choice
+      to the strategy seat and the House View.
     tools:
       - local_context
       - web_search
@@ -202,11 +231,27 @@ analysts:
     role: Strategy Choice Analyst
     section: Where-to-Play / How-to-Win (Entry Plays)
     skill: playing-to-win-analyst
+    phase: 2
     brief: >
       Conclude with 2-3 named entry plays, not a single generic strategy. For
       each play state: a one-line positioning, the target-share logic (which
       customers it wins and from whom), and the key capability premises that
       must hold. Downstream valuation prices these named plays individually.
+      Target segments and volume goals must reconcile explicitly against the
+      SAM/SOM in the Market Size section: either adopt its segment definitions
+      and figures directly, or re-derive a SOM for the chosen segment and show
+      the bridge from the sizing seat's numbers to yours. If a volume target
+      exceeds the upper end of the derived SOM, name the excess and defend it
+      — never let a target silently outrun the sizing. Candidate plays must
+      span the attractive spaces named by the profit-pool and growth-outlook
+      analyses (e.g. higher-margin segments, faster-growing horizons), not
+      only the incumbent-dominated volume segment. Before selecting, run a
+      structural pre-screen on every candidate: a play whose segment economics
+      are structurally loss-making for a sub-scale entrant, or whose cost
+      position directly overlaps the cost leader's core, fails the screen. A
+      failing play may be analyzed as a reference case but must not be the
+      selected play if any candidate passes; if every candidate fails, say so
+      and name the most credible alternative direction as the recommendation.
     tools:
       - local_context
       - web_search
@@ -214,6 +259,13 @@ analysts:
     role: Market Creation Analyst
     section: Uncontested-Space Opportunities
     skill: blue-ocean-analyst
+    brief: >
+      This seat produces input analysis for the strategy seat, not a rival
+      strategy. Map the uncontested space, but do not issue independent
+      where-to-play recommendations or target price-band calls. Where the
+      value-innovation read naturally points toward a direction, close with an
+      "Implications for the entry-strategy decision" list and leave the choice
+      to the strategy seat and the House View.
     tools:
       - local_context
       - web_search
@@ -283,14 +335,22 @@ analysts:
       - web_search
 
   # --- Financial & capital ---------------------------------------------------
-  # Valuation seats run in phase 2: they price the named entry plays produced
-  # by the phase-1 strategy seat, against the fact-checked sizing and structure
+  # Valuation seats run in phase 3: they price the named entry plays produced
+  # by the phase-2 strategy seat, against the fact-checked sizing and structure
   # sections — never a generic, undifferentiated entrant.
   valuation:
     role: Valuation Analyst
     section: Valuation & Economics
     skill: valuation-analyst
-    phase: 2
+    phase: 3
+    brief: >
+      Baseline discipline: a scenario built on optimistic operating assumptions
+      must be named "Upside" — never "Base". The Base case's assumptions must
+      survive the constraints of the Industry Structure section (e.g. a
+      structurally near-zero assembly margin caps the Base margin path). State
+      explicitly that if a later red-team correction conflicts with this
+      section's Base, the red-team-corrected scenario baseline is the
+      authoritative basis.
     tools:
       - worldbank
       - imf
@@ -300,7 +360,15 @@ analysts:
     role: Unit Economics Analyst
     section: Unit Economics & Profitability
     skill: valuation-analyst
-    phase: 2
+    phase: 3
+    brief: >
+      Baseline discipline: a scenario built on optimistic operating assumptions
+      must be named "Upside" — never "Base". The Base case's assumptions must
+      survive the constraints of the Industry Structure section (e.g. a
+      structurally near-zero assembly margin caps the Base margin path). State
+      explicitly that if a later red-team correction conflicts with this
+      section's Base, the red-team-corrected scenario baseline is the
+      authoritative basis.
     tools:
       - local_context
       - web_search
@@ -336,18 +404,18 @@ analysts:
   # `good-strategy-critic` is staffed as a section analyst (a strategy-quality
   # read on the thesis) and is distinct from the red-team gate, which the
   # orchestrator runs over the whole draft in the quality layer. Critics run
-  # in phase 2 so they critique the named entry plays actually proposed.
+  # in phase 3 so they critique the named entry plays actually proposed.
   strategy_critic:
     role: Strategy Critic
     section: Strategy Quality Assessment
     skill: good-strategy-critic
-    phase: 2
+    phase: 3
     tools:
       - memory_read
   strategy_critic_contra:
     role: Contrarian Strategy Critic
     section: Strategy Quality Assessment (Contrarian Read)
     skill: good-strategy-critic
-    phase: 2
+    phase: 3
     tools:
       - memory_read

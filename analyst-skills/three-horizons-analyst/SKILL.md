@@ -60,6 +60,11 @@ the market itself is likely to evolve across the three horizons. Complements
   inherently speculative — label it inference and keep confidence modest.
 - Do not equate horizons with fixed time buckets ("0–2 / 2–5 / 5+ years");
   classify by maturity and proof. Flag this if the source material conflates them.
+- **Strategy discipline.** This skill is an input lens, not the strategy seat:
+  do not issue independent where-to-play recommendations or target-segment /
+  price-band conclusions. Where the horizons read points toward a direction,
+  end that thread with an "Implications for the entry-strategy decision" list
+  for the strategy seat to adjudicate.
 - Close with the **allocation read across H1/H2/H3, the most important pipeline
   gap, and the single hand-off condition** most at risk of stalling growth.
 

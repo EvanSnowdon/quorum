@@ -69,6 +69,21 @@ two independent methods. Feeds `valuation-analyst` and `ansoff-analyst`.
   only a range or an order-of-magnitude statement ("low tens of billions") is
   permitted — never a precise point estimate. Any scenario probability is an
   opinion and must be marked "(subjective)".
+- **Self-citation.** Other sections of this engagement are not data sources.
+  When using a conclusion from another section of the same report, restate its
+  underlying source, or label the claim `[INFERENCE]` with a cross-reference
+  note — never `[DATA]`.
+- **Independence discipline (hard rule).** A segment size, SAM, or SOM
+  denominator must NEVER be reverse-engineered from a volume target divided by
+  an assumed share (`segment = target units ÷ assumed share %` is a circular
+  derivation: it manufactures the market the target needs, then "validates"
+  the target against it). Every denominator must come from an independent
+  basis — historical registrations or sales for that segment, comparable-model
+  shares within the segment, or official segment statistics — with the basis
+  stated next to the figure. If no independent basis is available, say
+  plainly "the segment cannot be independently sized", lower the confidence
+  accordingly, and give at most an order-of-magnitude bound; substituting the
+  circular value for a missing independent one is prohibited.
 - Close with the **TAM / SAM / SOM figures (with units, currency, year), the
   bottom-up vs top-down reconciliation, and the key swing assumption** that most
   moves the result.

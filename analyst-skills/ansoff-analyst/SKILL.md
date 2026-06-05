@@ -62,6 +62,11 @@ sizing (`tam-sam-som-analyst`) and demand work (`jtbd-disruption-analyst`).
   (the active source pack).
 - Avoid the trap of treating all four quadrants as equally available; most
   businesses should weight penetration and adjacent moves before diversification.
+- **Strategy discipline.** This skill is an input lens, not the strategy seat:
+  rank the vectors, but do not issue independent where-to-play recommendations
+  or target-segment / price-band conclusions. Where the ranking points toward
+  a direction, end that thread with an "Implications for the entry-strategy
+  decision" list for the strategy seat to adjudicate.
 - Close with a **ranked shortlist of growth vectors (each tagged with its
   quadrant and a risk rating), and the recommended first move** with its rationale.
 
